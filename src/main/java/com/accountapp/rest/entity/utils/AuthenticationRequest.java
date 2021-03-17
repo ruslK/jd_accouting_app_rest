@@ -1,4 +1,4 @@
-package com.accountapp.rest.entity;
+package com.accountapp.rest.entity.utils;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,7 @@
 package com.accountapp.rest.entity;
 
-import com.accountapp.rest.entity.BaseEntity;
-import com.accountapp.rest.entity.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.Where;
 
@@ -32,6 +31,7 @@ public class User extends BaseEntity {
     private String lastName;
 
     @Column(nullable = false, length = 60)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(nullable = false, length = 50)

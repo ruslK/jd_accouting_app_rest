@@ -2,7 +2,7 @@ package com.accountapp.rest.controller;
 
 import com.accountapp.rest.entity.User;
 import com.accountapp.rest.config.JWTConfig;
-import com.accountapp.rest.entity.AuthenticationRequest;
+import com.accountapp.rest.entity.utils.AuthenticationRequest;
 import com.accountapp.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
