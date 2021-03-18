@@ -3,7 +3,7 @@ package com.accountapp.rest.serviceImpl;
 import com.accountapp.rest.entity.User;
 import com.accountapp.rest.service.SecurityService;
 import com.accountapp.rest.service.UserService;
-import org.springframework.security.access.AccessDeniedException;
+import lombok.SneakyThrows;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +23,7 @@ public class SecurityServiceImpl implements SecurityService {
         this.userService = userService;
     }
 
+    @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userService.findByUserName(s);
@@ -39,7 +40,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
-    public User loadUser(String param) throws AccessDeniedException {
+    public User loadUser(String param) throws Exception {
         return userService.findByUserName(param);
     }
 }

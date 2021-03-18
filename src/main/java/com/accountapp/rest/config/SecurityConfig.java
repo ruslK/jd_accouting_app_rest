@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] permittedUrls = {
-            "/token",
+            "/authentication",
             "/swagger-ui.html",
             "/v3/api-docs/**",
             "/configuration/security",

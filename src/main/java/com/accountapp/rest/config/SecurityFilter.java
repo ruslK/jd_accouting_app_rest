@@ -3,7 +3,6 @@ package com.accountapp.rest.config;
 import com.accountapp.rest.entity.User;
 import com.accountapp.rest.service.SecurityService;
 import lombok.SneakyThrows;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,7 +52,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    private boolean checkIfUserIsValid(String username) throws AccessDeniedException {
+    private boolean checkIfUserIsValid(String username) throws Exception {
         User currentUser = securityService.loadUser(username);
         return currentUser != null && currentUser.getEnabled();
     }

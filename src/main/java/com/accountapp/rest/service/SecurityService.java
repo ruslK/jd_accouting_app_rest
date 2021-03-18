@@ -10,5 +10,5 @@ public interface SecurityService extends UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 
-    User loadUser(String param) throws AccessDeniedException;
+    User loadUser(String param) throws Exception;
 }

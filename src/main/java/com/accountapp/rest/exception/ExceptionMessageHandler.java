@@ -35,7 +35,7 @@ public class ExceptionMessageHandler {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(ResponseWrapper.builder().success(false)
-                .message("Action failed: An error occurred!")
+                .message(e.getMessage())
                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value()).build(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

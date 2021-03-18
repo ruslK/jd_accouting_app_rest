@@ -38,7 +38,6 @@ public class User extends BaseEntity {
     private String phone;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
     private Role role;
 
 
