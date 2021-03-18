@@ -37,4 +37,9 @@ public class ResponseWrapper {
         this.code = HttpStatus.OK.value();
         this.success = true;
     }
+
+    public ResponseWrapper(Object data) {
+        this.success = true;
+        this.data = data;
+    }
 }
