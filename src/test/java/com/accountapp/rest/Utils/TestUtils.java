@@ -40,6 +40,7 @@ public class TestUtils {
         user.setId(14234234L);
         user.setUsername("username");
         user.setPassword("password");
+        user.setEnabled(true);
         return user;
     }
 }

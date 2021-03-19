@@ -28,5 +28,4 @@ public class RoleController {
         return ResponseEntity.ok(
                 new ResponseWrapper(roleServices.getRoles()));
     }
-
 }
