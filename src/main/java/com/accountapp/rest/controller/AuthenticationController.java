@@ -35,7 +35,6 @@ public class AuthenticationController {
     @PostMapping
     @Operation(summary = "Get Token", description = "Generate token after authentication")
     public ResponseEntity<ResponseWrapper> generateToken(@RequestBody AuthenticationRequest body) throws Exception {
-        System.out.println(body);
         String password = body.getPassword();
         String username = body.getUsername();
         UsernamePasswordAuthenticationToken authenticationToken =

@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleServices {
     @Override
     public List<Role> getRoles() {
         Object role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
-        if (role.equals("Root")) {
+        if (role.toString().equals("Root")) {
             return roleRepository.getRolesForRoot();
         } else {
             return roleRepository.getRoles("Admin");
