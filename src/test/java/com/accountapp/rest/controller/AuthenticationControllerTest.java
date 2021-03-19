@@ -5,6 +5,7 @@ import com.accountapp.rest.config.JWTConfig;
 import com.accountapp.rest.entity.User;
 import com.accountapp.rest.entity.utils.AuthenticationRequest;
 import com.accountapp.rest.entity.utils.ResponseWrapper;
+import com.accountapp.rest.exception.ApplicationException;
 import com.accountapp.rest.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,13 +53,13 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void generateTokenControllerTest() throws Exception {
+    void generateTokenTest() throws Exception {
         ResponseEntity<ResponseWrapper> token = authenticationController.generateToken(authenticationRequest);
         assertEquals(token.getBody().getMessage(), "TestToken");
     }
 
     @Test
-    void generateTokenControllerExceptionTest() throws Exception {
+    void generateTokenExceptionTest() throws Exception {
         mockUser.setEnabled(false);
         lenient().when(userService.findByUserName(authenticationRequest.getUsername()))
                 .thenThrow(new RuntimeException("Account is not verified"));
@@ -66,5 +67,15 @@ class AuthenticationControllerTest {
         Throwable exception = assertThrows(RuntimeException.class,
                 () -> authenticationController.generateToken(authenticationRequest));
         assertEquals(exception.getMessage(), "Account is not verified");
+    }
+
+    @Test
+    void generateTokenInternalExceptionTest() throws Exception {
+        mockUser.setEnabled(false);
+        lenient().when(userService.findByUserName(authenticationRequest.getUsername()))
+                .thenReturn(mockUser);
+        Throwable exception = assertThrows(ApplicationException.class,
+                () -> authenticationController.generateToken(authenticationRequest));
+        assertEquals(exception.getMessage(), "Account is not VERIFIED, Please Verify your account!");
     }
 }
