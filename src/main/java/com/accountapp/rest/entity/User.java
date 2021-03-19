@@ -40,5 +40,8 @@ public class User extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Company company;
+
 
 }
