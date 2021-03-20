@@ -1,6 +1,7 @@
 package com.accountapp.rest.controller;
 
 import com.accountapp.rest.entity.User;
+import com.accountapp.rest.exception.ApplicationException;
 import com.accountapp.rest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,7 +24,7 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Get All Users", description = "Base on requester Role")
-    public List<User> getListOfUsers() {
+    public List<User> getListOfUsers() throws ApplicationException {
         return userService.getAllUsers();
     }
 

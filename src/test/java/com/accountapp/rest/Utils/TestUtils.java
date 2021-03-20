@@ -26,7 +26,7 @@ public class TestUtils {
         authorities.add(grantedAuthority);
         UserDetails userDetails = new org.springframework.security.core
                 .userdetails.User(
-                "username",
+                "1",
                 "password",
                 authorities);
         return userDetails;

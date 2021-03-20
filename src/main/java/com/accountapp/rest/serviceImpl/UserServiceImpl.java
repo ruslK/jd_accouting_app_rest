@@ -1,8 +1,10 @@
 package com.accountapp.rest.serviceImpl;
 
 import com.accountapp.rest.entity.User;
+import com.accountapp.rest.exception.ApplicationException;
 import com.accountapp.rest.repository.UserRepository;
 import com.accountapp.rest.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +23,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers() throws ApplicationException {
+        Object role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toArray()[0];
+        if (role.toString().equals("Root")) {
+            return userRepository.getUsersManagedByRoot();
+        } else if (role.toString().equals("Admin")) {
+            return userRepository.getUsersManagedByAdmin(
+                    Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName()));
+        } else {
+            throw new ApplicationException("Role - " + role.toString() + " - does not have access to get List of Users");
+        }
     }
 
     @Override
