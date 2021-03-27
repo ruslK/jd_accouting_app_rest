@@ -4,8 +4,6 @@ import com.accountapp.rest.entity.utils.DefaultExceptionMessage;
 import com.accountapp.rest.entity.utils.ResponseWrapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,7 +16,6 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 
 @RestControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class ExceptionMessageHandler {
 
     @ExceptionHandler({Exception.class, RuntimeException.class, Throwable.class, JwtException.class,

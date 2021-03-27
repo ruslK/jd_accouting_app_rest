@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Create new user", description = "Base on requester Role")
-    public User createNewUser(@RequestBody User user) throws Exception {
+    public User createNewUser(@Valid @RequestBody User user) throws Exception {
         return userService.createNewUser(user);
     }
 
