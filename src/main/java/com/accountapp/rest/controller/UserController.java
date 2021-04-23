@@ -38,11 +38,17 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation (summary = "Delete User", description = "Delete User by ID")
+    @Operation(summary = "Delete User", description = "Delete User by ID")
     public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable Long id) throws ApplicationException {
         userService.deleteUser(id);
         return ResponseEntity.ok(new ResponseWrapper("Account ID " + id + " - DELETED"));
     }
 
-
+    @PutMapping
+    @Operation(summary = "Update User", description = "Update User by ID")
+    public ResponseEntity<ResponseWrapper> updateUser(@Valid @RequestBody User user) throws Exception {
+        User updatedUser = userService.updateUser(user);
+        return ResponseEntity.ok(new ResponseWrapper("Account ID " + user.getId() + " - Updated",
+                updatedUser));
+    }
 }

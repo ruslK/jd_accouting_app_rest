@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createNewUser(User user) throws Exception {
         Optional<User> foundUser = userRepository.findByUsername(user.getUsername());
-        if (!foundUser.isEmpty()) {
+        if (foundUser.isPresent()) {
             throw new Exception("User with username: " + user.getUsername() + " is already exist");
         }
         user.setEnabled(true);
@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
      *      if ROOT - can delete only Admins, can't delete other users as Managers or Employees
      *      if Admin - can delete only users from same Company, can't delete Roots and other Admins,
      *          only can delete Managers or Employees
+     *
      * @param id - ID of account which need to delete
      * @return User object which was deleted
      * @throws ApplicationException - exception if User by ID not found
@@ -74,5 +75,28 @@ public class UserServiceImpl implements UserService {
         allUsers.get(0).setUsername(allUsers.get(0).getUsername() + "_" + new Date().getTime());
 
         return userRepository.save(allUsers.get(0));
+    }
+
+    /**
+     * Update user
+     * @param user User entity from Request Body
+     * @return Updated User Entity
+     * @throws Exception - 1. User not found. 2. Data Validation
+     */
+    @Override
+    public User updateUser(User user) throws Exception {
+        List<User> allUsers = this.getAllUsers().stream()
+                .filter(u -> u.getId().equals(user.getId())).collect(Collectors.toList());
+
+        if (allUsers.isEmpty()) throw new Exception("User ID " + user.getId() + " not found for your role");
+
+        if (user.getPassword() == null) {
+            user.setPassword(allUsers.get(0).getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        user.setEnabled(true);
+        return userRepository.save(user);
     }
 }
