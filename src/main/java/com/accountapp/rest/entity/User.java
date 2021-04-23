@@ -1,7 +1,6 @@
 package com.accountapp.rest.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.Where;
 
@@ -51,7 +50,8 @@ public class User extends BaseEntity {
     @Size(min = 8, max = 60)
     // TODO find out why with regexp password is not saving to the user object.
 //    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%])$", message = "wrong pattern")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // TODO find whey to handle update user without password
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(nullable = false, length = 20)
@@ -68,5 +68,4 @@ public class User extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
-
 }

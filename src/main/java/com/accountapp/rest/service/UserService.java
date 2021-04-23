@@ -15,4 +15,6 @@ public interface UserService {
     User deleteUser(Long id) throws ApplicationException;
 
     User updateUser(User user) throws Exception;
+
+    User getUserBaseOnRoleById(Long id) throws Exception;
 }

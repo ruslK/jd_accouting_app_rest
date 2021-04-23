@@ -66,15 +66,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User deleteUser(Long id) throws ApplicationException {
-        List<User> allUsers = this.getAllUsers().stream()
-                .filter(user -> user.getId().equals(id)).collect(Collectors.toList());
-
-        if (allUsers.isEmpty()) throw new ApplicationException("User ID " + id + " not found for your role");
-
-        allUsers.get(0).setEnabled(false);
-        allUsers.get(0).setUsername(allUsers.get(0).getUsername() + "_" + new Date().getTime());
-
-        return userRepository.save(allUsers.get(0));
+        User userTODelete = this.getUserBaseOnRoleById(id);
+        userTODelete.setEnabled(false);
+        userTODelete.setUsername(userTODelete.getUsername() + "_" + new Date().getTime());
+        return userRepository.save(userTODelete);
     }
 
     /**
@@ -85,18 +80,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User updateUser(User user) throws Exception {
-        List<User> allUsers = this.getAllUsers().stream()
-                .filter(u -> u.getId().equals(user.getId())).collect(Collectors.toList());
-
-        if (allUsers.isEmpty()) throw new Exception("User ID " + user.getId() + " not found for your role");
-
-        if (user.getPassword() == null) {
-            user.setPassword(allUsers.get(0).getPassword());
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
-
+        user.setPassword(this.getUserBaseOnRoleById(user.getId()).getPassword());
         user.setEnabled(true);
         return userRepository.save(user);
+    }
+
+    /**
+     * Getting Specific user By ID
+     * @param id - Searching User ID
+     * @return - User Entity
+     * @throws ApplicationException - Not Found user error
+     */
+    @Override
+    public User getUserBaseOnRoleById(Long id) throws ApplicationException {
+        List<User> users = this.getAllUsers().stream()
+                .filter(user -> user.getId().equals(id)).collect(Collectors.toList());
+        if (users.isEmpty()) throw new ApplicationException("User ID " + id + " not found for your role");
+        return users.get(0);
     }
 }

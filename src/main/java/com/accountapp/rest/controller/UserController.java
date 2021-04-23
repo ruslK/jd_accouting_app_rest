@@ -31,6 +31,12 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get User", description = "Get User By ID")
+    public User getUserById(@PathVariable Long id) throws Exception {
+        return userService.getUserBaseOnRoleById(id);
+    }
+
     @PostMapping
     @Operation(summary = "Create new user", description = "Base on requester Role")
     public User createNewUser(@Valid @RequestBody User user) throws Exception {
