@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,7 @@ import javax.persistence.*;
 public class Role extends BaseEntity {
 
     @Column(nullable = false, length = 20, updatable = false, unique = true)
+    @NotNull(message = "is required, getting")
+    @NotBlank(message = "is required, getting")
     private String name;
 }

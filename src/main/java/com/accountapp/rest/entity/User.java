@@ -19,7 +19,7 @@ import javax.validation.constraints.*;
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer"}, ignoreUnknown = true)
 public class User extends BaseEntity {
 
-    @Column(nullable = false, length = 50, unique = true, updatable = false)
+    @Column(nullable = false, length = 50, unique = true)
     @NotNull
     @NotBlank
     @Size(min = 5, max = 50)
@@ -63,6 +63,7 @@ public class User extends BaseEntity {
     private String phone;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull (message = "is required, getting")
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)

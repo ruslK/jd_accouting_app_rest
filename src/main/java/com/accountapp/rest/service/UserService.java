@@ -11,4 +11,6 @@ public interface UserService {
     User findByUserName(String userName) throws Exception;
 
     User createNewUser(User user) throws Exception;
+
+    User deleteUser(Long id) throws ApplicationException;
 }

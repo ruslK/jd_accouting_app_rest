@@ -1,10 +1,12 @@
 package com.accountapp.rest.controller;
 
 import com.accountapp.rest.entity.User;
+import com.accountapp.rest.entity.utils.ResponseWrapper;
 import com.accountapp.rest.exception.ApplicationException;
 import com.accountapp.rest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,13 @@ public class UserController {
     @Operation(summary = "Create new user", description = "Base on requester Role")
     public User createNewUser(@Valid @RequestBody User user) throws Exception {
         return userService.createNewUser(user);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation (summary = "Delete User", description = "Delete User by ID")
+    public ResponseEntity<ResponseWrapper> deleteUser(@PathVariable Long id) throws ApplicationException {
+        userService.deleteUser(id);
+        return ResponseEntity.ok(new ResponseWrapper("Account ID " + id + " - DELETED"));
     }
 
 
